@@ -57,12 +57,6 @@ for text in params:
             # Lendo o nome do arquivo no console e armazenando na variável
             arquivo = sys.argv[2]
 
-            # Abrindo o arquivo
-            matriz, num_vertices = calcula_matriz(arquivo)
-
-            # Imprimir matriz 
-            imprime_matriz(matriz, num_vertices)
-
         except FileNotFoundError as err:
             # Tratando o erro de arquivo não encontrado
             print(f"O arquivo \"{arquivo}\" não foi encontrado")
@@ -76,14 +70,15 @@ for text in params:
             tipo = sys.argv[4]
             
             # Tratando os tipos de visualizações permitidas
-            if tipo == '-li':
-
-                # Printando a lista de incidências         
-                print('Lista de incidências')
-
-            elif tipo == '-mi':
+            if tipo == '-mi':
                 # Printando a matriz de incidências
-                print('Matriz de incidências')
+                print('Matriz de pesos')
+
+                # Abrindo o arquivo
+                matriz, num_vertices = calcula_matriz(arquivo)
+
+                # Imprimir matriz 
+                imprime_matriz(matriz, num_vertices)
 
             else:
                 # Printando erro
