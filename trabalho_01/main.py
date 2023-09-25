@@ -1,5 +1,49 @@
 # Configurar as importações
 import sys
+import os
+
+def calcula_matriz(arquivo):
+    # declaração da matriz inicial auxiliar vazia
+    matriz = []
+
+    # Abre o arquivo para leitura
+    
+    with open(arquivo, "r") as arquivo:
+        # Lê o valor da primeira linha (quantidade de vertices) e o converte para int
+        num_vertices = int(arquivo.readline().strip())
+
+        # Lê o restante das linhas do arquivoos converte para int e os adiciona na matriz auxiliar
+        for linha in arquivo:
+            valores = linha.split()
+            valores = [int(valor) for valor in valores]
+            if valores != []:
+                matriz.append(valores)
+
+        # Declaração e preenchimento da matriz ponderado com zeros com base na quantidade de vertices
+        matriz_ponderada = [[0 for i in range(num_vertices)] for i in range(num_vertices)]
+        
+        # Preenchimento da matriz ponderada com os valores da matriz lida
+        for origem, destino, peso in matriz:
+            matriz_ponderada[origem - 1][destino - 1] = peso
+        return matriz_ponderada, num_vertices
+
+def imprime_matriz(matriz_ponderada, num_vertices):
+    # Impressão da matriz ponderada
+    # Imprime o cabeçalho das colunas
+    print("Vertices", num_vertices)
+    print("   ", end="")
+    for i in range(1, num_vertices + 1):
+        print(f"{i:2d} ", end="")
+    print()
+
+    # Imprime as linhas da matriz
+    for i in range(num_vertices):
+        # Imprime o cabeçalho das linhas
+        print(f"{i + 1:2d} ", end="")
+        # Imprime os pesos das arestas
+        for j in range(num_vertices):
+            print(f"{matriz_ponderada[i][j]:2d} ", end="")
+        print()
 
 # Configurar leitura dos parâmetros
 params = sys.argv[1:]
@@ -14,39 +58,14 @@ for text in params:
             arquivo = sys.argv[2]
 
             # Abrindo o arquivo
-            arq = open(arquivo, 'r')
-            lines = arq.readlines()
+            matriz, num_vertices = calcula_matriz(arquivo)
 
-            # Configurando o grafo n
-            grafo_n = int(lines[0])
-
-            # Configurando os vértices do grafo
-            vertices = lines[1:]
-
-            # 0, 2, 4
-            matriz = []
-
-            # Linha
-            for i in range(grafo_n):
-                linha = []
-                # Coluna
-                for j in range(grafo_n):
-                    if (j == int(vertices[i][0])):
-                        linha.append(int(vertices[i][4]))
-                    else:
-                        linha.append(0)
-                matriz.append(linha)
-            
-            print(matriz)
+            # Imprimir matriz 
+            imprime_matriz(matriz, num_vertices)
 
         except FileNotFoundError as err:
             # Tratando o erro de arquivo não encontrado
             print(f"O arquivo \"{arquivo}\" não foi encontrado")
-            break
-
-        except Exception as err:
-            # Tratando erros gerais
-            print("Ocorreu um erro :", err)
             break
 
     try:
@@ -72,7 +91,6 @@ for text in params:
 
     except Exception as err:
         print(err)
-
 
 #Tipo de comandos aceitos
 
