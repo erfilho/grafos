@@ -1,6 +1,5 @@
 # Configurar as importações
 import sys
-import os
 
 def calcula_matriz(arquivo):
     # declaração da matriz inicial auxiliar vazia
@@ -12,7 +11,7 @@ def calcula_matriz(arquivo):
         # Lê o valor da primeira linha (quantidade de vertices) e o converte para int
         num_vertices = int(arquivo.readline().strip())
 
-        # Lê o restante das linhas do arquivoos converte para int e os adiciona na matriz auxiliar
+        # Lê o restante das linhas do arquivos converte para int e os adiciona na matriz auxiliar
         for linha in arquivo:
             valores = linha.split()
             valores = [int(valor) for valor in valores]
